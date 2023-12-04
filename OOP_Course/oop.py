@@ -1,3 +1,5 @@
+import csv
+
 class Item:
     pay_rate = 0.8 #the pay after 20% discount
     all = []
@@ -21,9 +23,34 @@ class Item:
     def ApplyDiscount(self):
         self.price =self.price * self.pay_rate
 
+    @classmethod
+    def InstantiateCSV(cls):
+        with open('item.csv', 'r') as f:
+            reader = csv.DictReader(f)
+            items = list(reader)
+        
+        for item in items:
+            Item(
+                name = item.get("name"),
+                price = float( item.get("price")),
+                quantity= int(item.get("quantity"))
+            )
+
+    @staticmethod
+    def isInteger(num):
+        #we will count the number of flouts data
+        if isinstance(num, float):
+            return num.is_integer()
+        elif isinstance(num, int):
+            return True
+        else:
+            return False
+
+
     def __repr__(self) -> str:
         return f"Item('{self.name}','{self.price}','{self.quantity}')"
 
+print(Item.isInteger(7))
 
 """
 Here we see how to apply a different discount to different items
@@ -45,7 +72,7 @@ The diference between atributes form class and instance level
 
 print(Item.__dict__) #print atributes for the class level
 print(item1.__dict__) #print atributes for the instance level
-"""
+
 
 item1 = Item("Phone", 100, 5)
 item2 = Item("Laptop", 150, 3)
@@ -57,3 +84,4 @@ print(Item.all)
 
 for instance in Item.all:
     print(instance.name)
+"""
