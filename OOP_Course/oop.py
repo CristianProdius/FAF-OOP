@@ -48,9 +48,8 @@ class Item:
 
 
     def __repr__(self) -> str:
-        return f"Item('{self.name}','{self.price}','{self.quantity}')"
+        return f"{self.__class__.__name__}('{self.name}','{self.price}','{self.quantity}')"
 
-print(Item.isInteger(7))
 
 """
 Here we see how to apply a different discount to different items
@@ -64,9 +63,6 @@ item2.pay_rate = 0.7 #change the discount for item 2 to 30% fut the item1 is sti
 item2.ApplyDiscount()
 print(item2.price)
 """
-
-
-
 """
 The diference between atributes form class and instance level
 
@@ -85,3 +81,28 @@ print(Item.all)
 for instance in Item.all:
     print(instance.name)
 """
+
+class Phone(Item):
+        def __init__(self, name: str, price: float, quantity=0, broken_phones = 0) -> None:
+
+            super().__init__(
+                name, price, quantity
+            )
+            #Validate the reciving data
+            assert price >= 0, f"Price {price} is not greater then zero"
+            assert quantity >= 0, f"Quantity {quantity} is not greater then zero"
+            assert broken_phones >= 0, f"Broken_phones {broken_phones} is not greater then zero"
+
+            #Asing to self objecte
+            self.name = name
+            self.price = price
+            self.quantity = quantity
+            self.broken_phones = broken_phones
+
+        
+
+phone1 = Phone("iphone 15", 500, 5, 1)
+phone2 = Phone("iphone 13", 300, 5, 1)
+
+print(Item.all)
+print(Phone.all)
